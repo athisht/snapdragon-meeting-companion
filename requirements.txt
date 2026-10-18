@@ -1,0 +1,24 @@
+# ==============================================================================
+# Snapdragon Offline Meeting Companion - Common Requirements
+#
+# PLATFORM-SPECIFIC INSTALLATION:
+#   For x86 Dev Laptops (HP Victus / Intel / AMD - CPU mode):
+#     pip install -r requirements-dev.txt
+#
+#   For Snapdragon Copilot+ PCs (Windows ARM64 - Qualcomm Hexagon NPU):
+#     pip install -r requirements-arm.txt
+#
+# Zero CUDA or PyTorch dependencies in shipped core pipeline.
+# ==============================================================================
+
+# Desktop GUI & Visualizations
+PySide6>=6.6.0
+pyyaml>=6.0.1
+
+# Real-Time 16kHz Audio Capture & Signal Processing
+sounddevice>=0.4.6
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Hardware Abstraction Layer (ONNX Runtime Common Layer)
+onnxruntime>=1.18.0

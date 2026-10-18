@@ -1,0 +1,17 @@
+# ==============================================================================
+# Development Dependencies (x86_64 Laptop - HP Victus / Intel / AMD)
+# Hardware Execution Provider: CPUExecutionProvider (via ONNX Runtime CPU)
+# Zero CUDA or PyTorch dependencies in shipped core pipeline.
+# ==============================================================================
+
+# Desktop GUI & Settings
+PySide6>=6.6.0
+pyyaml>=6.0.1
+
+# Real-Time Audio Capture & Signal Processing (16kHz Mono)
+sounddevice>=0.4.6
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Hardware Abstraction Layer - ONNX Runtime CPU
+onnxruntime>=1.18.0

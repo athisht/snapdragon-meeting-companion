@@ -1,0 +1,25 @@
+# ==============================================================================
+# Production Target Dependencies (Snapdragon Copilot+ PC - Windows ARM64)
+# Hardware Execution Provider: QNNExecutionProvider (Qualcomm Hexagon NPU)
+# Target Silicon: Snapdragon X Elite / Snapdragon X Plus
+# ==============================================================================
+
+# Desktop GUI (Native Windows ARM64 Qt)
+PySide6>=6.6.0
+pyyaml>=6.0.1
+
+# Real-Time Audio Capture & Signal Processing (16kHz Mono)
+sounddevice>=0.4.6
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Hardware Abstraction Layer - ONNX Runtime QNN Execution Provider
+# Enables direct execution on Qualcomm Hexagon Tensor Processor (HTP) via QnnHtp.dll
+onnxruntime-qnn>=1.18.0; platform_machine == "ARM64"
+onnxruntime>=1.18.0; platform_machine != "ARM64"
+
+# Qualcomm AI Hub CLI & Model Zoo (for compiling & downloading Hexagon NPU artifacts)
+qai-hub>=0.15.0
+
+# ONNX Runtime GenAI for on-device LLM generation (Llama-3.2 / Phi-3.5 on NPU)
+onnxruntime-genai>=0.4.0

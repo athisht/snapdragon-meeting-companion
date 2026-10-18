@@ -1,0 +1,63 @@
+# ==============================================================================
+# Snapdragon Offline Meeting Companion Configuration
+# Target: Windows 11 Copilot+ PC (Snapdragon X Elite / X Plus - Hexagon NPU)
+# Also portable to x86 Dev machines (CPU execution provider).
+# All inference runs 100% locally on-device. Zero cloud dependencies.
+# ==============================================================================
+
+app:
+  name: "Snapdragon Offline Meeting Companion"
+  version: "1.0.0"
+  mock_mode: false         # Set to true for UI / plumbing simulation without model files
+  export_dir: "exports"
+
+device:
+  # Execution provider backend:
+  # Options: 'cpu' (x86 dev / fallback), 'qnn' (Snapdragon Hexagon NPU), 'cuda' (optional)
+  # Can also be overridden via environment variable: EXECUTION_PROVIDER=cpu|qnn
+  execution_provider: "cpu"
+  allow_fallback: true     # Gracefully falls back to CPU if requested provider isn't supported
+  qnn_backend_path: "QnnHtp.dll" # Qualcomm Hexagon Tensor Processor (HTP) library for Snapdragon X
+
+audio:
+  sample_rate: 16000      # 16kHz required by Whisper
+  channels: 1             # Mono audio
+  chunk_duration_sec: 4.0 # Process audio in 4-second chunks
+  silence_threshold: 0.01 # Audio energy threshold for Voice Activity Detection (VAD)
+  input_device_index: null # null uses system default microphone
+
+# ------------------------------------------------------------------------------
+# Target-Separated Model Paths:
+# /models/cpu/ for x86 dev machine
+# /models/qnn/ for Snapdragon Copilot+ PC (Hexagon NPU)
+# ------------------------------------------------------------------------------
+models:
+  cpu:
+    stt_model_path: "models/cpu/stt/whisper_base_en.onnx"
+    diarization_model_path: "models/cpu/diarization/speaker_embedding.onnx"
+    summarizer_model_path: "models/cpu/llm/llama_3_2_1b"
+
+  qnn:
+    stt_model_path: "models/qnn/stt/whisper_base_en_quantized_qnn.onnx"
+    diarization_model_path: "models/qnn/diarization/speaker_embedding_qnn.onnx"
+    summarizer_model_path: "models/qnn/llm/llama_3_2_1b_qnn"
+
+  # Inference parameters
+  stt:
+    language: "en"
+    temperature: 0.0
+
+  diarization:
+    similarity_threshold: 0.72
+    max_speakers: 6
+
+  summarizer:
+    max_tokens: 512
+    temperature: 0.2
+    cadence_utterances: 5 # Trigger rolling summary refresh every N new utterances
+
+ui:
+  theme: "dark"
+  window_title: "Snapdragon Meeting Companion (Offline Copilot+ PC)"
+  width: 1240
+  height: 820
